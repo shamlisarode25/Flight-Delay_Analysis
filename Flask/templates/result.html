@@ -1,0 +1,76 @@
+<html>
+<head>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://wallpaperaccess.com/full/1968246.jpg');
+          	background-size: cover;
+       	 }
+       	 body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: url('https://wallpaperaccess.com/full/1968246.jpg');
+            background-size: cover;
+            transform: scaleX(-1);
+        }
+        
+
+    </style>
+</head>
+<body>
+    <h1><center>Flight Delay Prediction</center></h1>
+    <p style="font-size:20px;">
+    <div style="background-color: #D1D0CE; border-radius: 5px; padding: 20px; rgba(0, 0, 0, 0.1); width: 30%; float: right; margin-right: 40px;">
+            <h3>Input Values</h3>
+            {% if prediction %}
+            <table border="1" style="margin: 0 auto;">
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Day of Month</td>
+                    <td>{{ input_values[0] }}</td>
+                </tr>
+                <tr>
+                    <td>Reporting Airline</td>
+                    <td>{{ input_values[1]|reverse_lookup(airlines) }}</td>
+                </tr>
+                <tr>
+                <td>Flight Number of Reporting Airline</td>
+                    <td>{{ input_values[2] }}</td>
+                </tr>
+                <tr>
+                    <td>Origin Airport</td>
+                    <td>{{ input_values[3]|reverse_lookup(airports) }}</td>
+                </tr>
+                <tr>
+                    <td>Destination Airport</td>
+                    <td>{{ input_values[4]|reverse_lookup(airports) }}</td>
+                </tr>
+                <tr>
+                    <td>CRS Elapsed Time (mins)</td>
+                    <td>{{ input_values[5] }}</td>
+                </tr>
+                <tr>
+                    <td>AirTime (mins)</td>
+                    <td>{{ input_values[6] }}</td>
+                </tr>
+                <tr>
+                    <td>Distance</td>
+                    <td>{{ input_values[7] }}</td>
+                </tr>
+            </table>
+            {% endif %}
+            <h2><center><strong>{{ prediction }}</strong></center></h2>
+        </div>
+    </p>
+</body>
+</html>

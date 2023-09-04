@@ -1,0 +1,122 @@
+<html>
+<head>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://wallpaperaccess.com/full/1968246.jpg');
+          	background-size: cover;
+       	 }
+       	 body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: url('https://wallpaperaccess.com/full/1968246.jpg');
+            background-size: cover;
+            transform: scaleX(-1);
+        }
+
+        form {
+            background-color: #D1D0CE;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            float: right;
+            margin-right: 40px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+        }
+         .result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <h1><center>Flight Delay Prediction</center></h1>
+    <p style="font-size:20px;">
+<div>
+  <form action="/result" method="POST">
+    
+    <label for="DayofMonth">Day of Month</label>
+    <input type="text" id="DayofMonth" name="DayofMonth", value="{{ request.form.get('DayofMonth', '') }}">
+    <br>
+    
+    <label for="Reporting_Airline">Reporting Airline</label>
+    <select name="Reporting_Airline" id="Reporting_Airline">
+        {% for airline in range(1, 17) %}
+            <option value="{{ airline }}" {% if request.form.get('Reporting_Airline') == airline|string  %}selected{% endif %}>{{ airline }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <br>
+    <label for="Flight_Number_Reporting_Airline">Flight Number of Reporting Airline</label>
+    <input type="text" id="Flight_Number_Reporting_Airline" name="Flight_Number_Reporting_Airline" value="{{ request.form.get('Flight_Number_Reporting_Airline', '') }}">
+    <br>
+    
+    <label for="Origin">Origin Airport</label>
+    <input type="text" id="Origin" name="Origin" value="{{ request.form.get('Origin', '') }}">
+    <br>
+    
+    <label for="Dest">Destination Airport</label>
+    <input type="text" id="Dest" name="Dest" value="{{ request.form.get('Dest', '') }}">
+    <br>
+    
+    <label for="CRSElapsedTime">CRS Elapsed Time(in Mins)</label>
+    <input type="text" id="CRSElapsedTime" name="CRSElapsedTime" value="{{ request.form.get('CRSElapsedTime', '') }}">
+    <br>
+    
+    <label for="AirTime">AirTime(in Mins)</label>
+    <input type="text" id="AirTime" name="AirTime" value="{{ request.form.get('AirTime', '') }}">
+    <br>
+    
+    <label for="Distance">Distance</label>
+    <input type="text" id="Distance" name="Distance" value="{{ request.form.get('Distance', '') }}">
+    <br>
+    
+    <button type="submit"><center>Predict</center></button>
+    {% if prediction %}
+    <h4>
+        <div class="result">
+            {{ prediction }}
+        </div>
+    </h4>
+    {% endif %}
+  </form>
+</div>
+
+</p>
+</body>
+</html>
